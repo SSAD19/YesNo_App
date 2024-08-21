@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/presentation/screens/shared/message_field_box.dart';
 import 'package:yes_no_app/presentation/widgets/chat/my_message_bubble.dart';
+import 'package:yes_no_app/presentation/widgets/chat/other_message_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -14,14 +16,12 @@ class ChatScreen extends StatelessWidget {
             backgroundImage: NetworkImage('https://images.mubicdn.net/images/cast_member/282705/cache-397104-1544788154/image-w856.jpg'),
           ),
         ),
-        title: const Text('Tom, amorcito'),
+        title: const Text('Tom'),
       ),
       body:_ChatView(),
     );
   }
 }
-
-
 
 
 
@@ -38,10 +38,16 @@ class _ChatView extends StatelessWidget {
                 //itemcount se coloca cuando sé la cantidad de elementos que tengo/quiero
                 itemCount: 16,
                 itemBuilder:(context, index) {
-                  return const MyMessageBubble();
+                  return index%2  == 0
+                  ? const MyMessageBubble()
+                  : const OtherMessageBubble();
                   
                 },),
             ),
+            const SizedBox(height: 3,),
+            const MessageFieldBox(),
+            const SizedBox(height: 4,),
+
         ],
       ),
     );

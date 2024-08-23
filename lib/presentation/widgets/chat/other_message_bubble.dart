@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/entities/message.dart';
 
 class OtherMessageBubble extends StatelessWidget {
-  const OtherMessageBubble({super.key});
+  const OtherMessageBubble({super.key,
+  required this.message});
+
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +24,14 @@ class OtherMessageBubble extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
 
           ),
-          //TODO: gif
-          child: const Text('Consequat ad anim occaecat est enim veniam anim duis est in nostrud dolor do reprehenderit.'),
+ 
+          child: Text(message.text),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 4, horizontal:6),
-          child: _ImageBubble(),
+         
+       if (message.imageUrl != null ) 
+          Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal:6),
+          child: _ImageBubble(message),
         ),
       ],
     );
@@ -35,7 +41,9 @@ class OtherMessageBubble extends StatelessWidget {
 
 
 class _ImageBubble extends StatelessWidget {
-  const _ImageBubble();
+  const _ImageBubble(this.message);
+
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,7 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(  
     borderRadius: BorderRadius.circular(25),
     child: Image.network(
-      'https://yesno.wtf/assets/no/28-e19b6f658f621f7c5980a33f8249a65d.gif',
+      '${message.imageUrl}',      
       width: size.width * 0.6,
       height: 150,
       fit: BoxFit.cover,

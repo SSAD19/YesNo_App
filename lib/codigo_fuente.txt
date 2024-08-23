@@ -1,1 +1,54 @@
 https://github.com/Klerith/flutter-yes-no-app/tree/fin-seccion-5
+
+codigo fuente final 
+
+
+Temas segunda parte : 
+Gestores de estado 
+mappers
+peticiones htto 
+Dio
+Paquetes 
+funcion con retorno callback
+scroll 
+provider
+y más 
+
+unidad atómica -> lo màs puro /entidad/ que necesita mi app 
+
+
+En Flutter, al usar provider, la diferencia clave entre instanciar un Provider<algo> y un ChangeNotifierProvider en tu MultiProvider radica en cómo manejan la notificación de cambios y la reconstrucción de widgets.
+
+Provider<algo>
+
+Uso general: Se utiliza para proporcionar cualquier tipo de objeto a tus widgets descendientes.
+Sin notificación automática: No escucha automáticamente los cambios en el objeto proporcionado. Si el objeto cambia internamente, los widgets que dependen de él no se reconstruirán a menos que utilices mecanismos adicionales (como Consumer y Selector) para forzar la reconstrucción.
+Ejemplo: Ideal para objetos inmutables o aquellos cuyos cambios no afectan directamente a la interfaz de usuario.
+Dart
+MultiProvider(
+  providers: [
+    Provider<MiServicio>(create: (_) => MiServicio()), // MiServicio no extiende ChangeNotifier
+  ],
+  child: MaterialApp(...),
+);
+Usa el código con precaución.
+
+ChangeNotifierProvider
+
+Específico para ChangeNotifier: Diseñado para proporcionar instancias de clases que extienden ChangeNotifier.
+Notificación automática: Escucha los cambios en el objeto proporcionado a través del método notifyListeners(). Cuando se llama a notifyListeners(), todos los widgets que dependen de ese objeto se reconstruyen automáticamente.
+Ejemplo: Ideal para objetos que representan el estado de la aplicación y cuyos cambios deben reflejarse en la interfaz de usuario.
+Dart
+MultiProvider(
+  providers: [
+    ChangeNotifierProvider<MiModelo>(create: (_) => MiModelo()), // MiModelo extiende ChangeNotifier
+  ],
+  child: MaterialApp(...),
+);
+Usa el código con precaución.
+
+En resumen:
+
+Si el objeto que proporcionas no necesita notificar cambios a los widgets, usa Provider<algo>.
+Si el objeto necesita notificar cambios para que los widgets se reconstruyan, asegúrate de que extienda ChangeNotifier y usa ChangeNotifierProvider.
+Consejo: Si no estás seguro de si un objeto necesitará notificar cambios en el futuro, es mejor usar ChangeNotifierProvider desde el principio para evitar refactorizaciones posteriores.
